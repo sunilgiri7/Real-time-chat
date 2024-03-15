@@ -2,7 +2,8 @@
   "dependencies": {
     "@types/websocket": "^1.0.10",
     "typescript": "^5.4.2",
-    "websocket": "^1.0.34"
+    "websocket": "^1.0.34",
+    "zod": "^3.22.4"
   },
   "name": "real-time-chat",
   "description": "- Allow an admin to create a new chat session/room. Admin should be allowed to set the following properties on the room -\r - Name\r - start_time\r - is_open\r - cool_down_time\r - Allow a users to join the room and send messages\r - Allow users to upvote chat messages.\r - If chat messages reach more than 3 upvotes, move them over to a saparate section.\r - If chat messages reach more than 10 upvotes, alert the admin to answer.",
