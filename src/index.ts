@@ -27,6 +27,8 @@ function originIsAllowed(origin: string) {
 }
 
 wsServer.on("request", function (request) {
+    console.log("inside connect")
+    return;
   if (!originIsAllowed(request.origin)) {
     // Make sure we only accept requests from an allowed origin
     request.reject();
@@ -39,8 +41,10 @@ wsServer.on("request", function (request) {
   var connection = request.accept("echo-protocol", request.origin);
   console.log(new Date() + " Connection accepted.");
   connection.on("message", function (message) {
+    console.log(message);
     if (message.type === "utf8") {
         try{
+            console.log("indie with message: " + message.utf8Data)
             messageHandler(connection, JSON.parse(message.utf8Data));
         }catch(e){
 
@@ -56,6 +60,7 @@ wsServer.on("request", function (request) {
   });
 });
 function messageHandler(ws: connection, message: IncomingMessage) {
+    console.log("Incoming message" +JSON.stringify(message));
   if (message.type == SupportedMessage.JoinRoom) {
     const payload = message.payload;
     UserManager.addUser(payload.name, payload.userId, payload.roomId, ws)
@@ -95,8 +100,9 @@ function messageHandler(ws: connection, message: IncomingMessage) {
       payload: {
         chatId: payload.chatId,
         roomId: payload.roomId,
-        upvotes: 0,
+        upvotes: chat.upvote.length
       },
     };
+    userManager.broadcast(payload.roomId, payload.userId, outgoingPayLoad);
   }
 }
